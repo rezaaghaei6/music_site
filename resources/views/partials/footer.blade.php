@@ -1,55 +1,51 @@
-<footer>
-    <div class="footer-content">
-        <div class="footer-logo">
-            <div class="violin">
-                <div class="neck"></div>
-                <div class="body"></div>
-                <div class="strings"></div>
+<footer class="bg-white border-t border-gray-200 py-8 px-6">
+    <div class="container mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-lg font-bold mb-4 gradient-text">{{ config('app.name', 'موزیکا') }}</h3>
+                <p class="text-gray-600 mb-4">پلتفرم موسیقی آنلاین برای لذت بردن از بهترین موزیک‌ها</p>
+                <div class="flex space-x-4 space-x-reverse">
+                    <a href="#" class="text-gray-400 hover:text-primary-500"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-primary-500"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-primary-500"><i class="fab fa-telegram"></i></a>
+                </div>
             </div>
-            <h3>موسیقی آنلاین</h3>
+            
+            <div>
+                <h3 class="text-lg font-bold mb-4">لینک‌های سریع</h3>
+                <ul class="space-y-2">
+                    <li><a href="{{ route('home') }}" class="text-gray-600 hover:text-primary-500">صفحه اصلی</a></li>
+                    <li><a href="{{ route('home') }}" class="text-gray-600 hover:text-primary-500">دسته‌بندی‌ها</a></li>
+                    <li><a href="{{ route('home') }}" class="text-gray-600 hover:text-primary-500">هنرمندان</a></li>
+                    <li><a href="{{ route('home') }}" class="text-gray-600 hover:text-primary-500">آلبوم‌ها</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-bold mb-4">منابع</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-600 hover:text-primary-500">وبلاگ</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-primary-500">پشتیبانی</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-primary-500">سوالات متداول</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-primary-500">تماس با ما</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-bold mb-4">قانونی</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-600 hover:text-primary-500">حریم خصوصی</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-primary-500">شرایط استفاده</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-primary-500">کپی‌رایت</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-primary-500">درباره ما</a></li>
+                </ul>
+            </div>
         </div>
         
-        <div class="footer-links">
-            <div class="footer-section">
-                <h4>دسترسی سریع</h4>
-                <ul>
-                    <li><a href="/">خانه</a></li>
-                    <li><a href="#categories">دسته‌بندی‌ها</a></li>
-                    <li><a href="#trending">محبوب‌ترین‌ها</a></li>
-                    <li><a href="/contact">تماس با ما</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h4>دسته‌بندی‌ها</h4>
-                <ul>
-                    <li><a href="/category/ترند-اینستاگرام">ترند اینستاگرام</a></li>
-                    <li><a href="/category/سنتی">سنتی</a></li>
-                    <li><a href="/category/پاپ">پاپ</a></li>
-                    <li><a href="/category/ترند-جهانی">ترند جهانی</a></li>
-                    <li><a href="/category/موسیقی-آرامش‌بخش">موسیقی آرامش‌بخش</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h4>پشتیبانی</h4>
-                <ul>
-                    <li><a href="/faq">سوالات متداول</a></li>
-                    <li><a href="/terms">قوانین و مقررات</a></li>
-                    <li><a href="/privacy">حریم خصوصی</a></li>
-                    <li><a href="/contact">تماس با ما</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    
-    <div class="footer-bottom">
-        <p>&copy; 2025 موسیقی آنلاین. تمامی حقوق محفوظ است.</p>
-        <div class="social-icons">
-            <a href="#" class="social-icon">🌐</a>
-            <a href="#" class="social-icon">📱</a>
-            <a href="#" class="social-icon">📷</a>
-            <a href="#" class="social-icon">🐦</a>
+        <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+            <p class="text-gray-500 text-sm">
+                &copy; {{ date('Y') }} {{ config('app.name', 'موزیکا') }}. تمامی حقوق محفوظ است.
+            </p>
         </div>
     </div>
 </footer>

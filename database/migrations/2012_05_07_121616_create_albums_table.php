@@ -11,14 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // حذف جدول فعلی اگر وجود داشته باشد
+        Schema::dropIfExists('albums');
+
+        // ایجاد مجدد جدول با ساختار کامل
         Schema::create('albums', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('artist_id')->constrained()->onDelete('cascade');
-            $table->string('cover')->nullable();
-            $table->year('release_year')->nullable();
             $table->string('slug')->unique();
+            $table->foreignId('artist_id')->constrained()->onDelete('cascade');
+            $table->date('release_date')->nullable();
+            $table->string('cover_image')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('is_featured')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

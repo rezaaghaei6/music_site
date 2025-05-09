@@ -10,30 +10,23 @@ class Artist extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
+        'slug',
         'bio',
         'image',
-        'slug',
         'is_featured',
     ];
 
-    /**
-     * Get the songs for the artist.
-     */
+    protected $casts = [
+        'is_featured' => 'boolean',
+    ];
+
     public function songs(): HasMany
     {
         return $this->hasMany(Song::class);
     }
 
-    /**
-     * Get the albums for the artist.
-     */
     public function albums(): HasMany
     {
         return $this->hasMany(Album::class);

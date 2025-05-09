@@ -3,649 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سایت موزیک</title>
+    <meta name="description" content="بهترین پلتفرم موسیقی برای گوش دادن به آهنگ‌های محبوب شما">
+    <title>{{ config('app.name', 'موزیکا') }} | @yield('title', 'پلتفرم موسیقی آنلاین')</title>
+    
+    <!-- فونت‌ها -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <!-- استایل‌های تیلویند -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'vazir': ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49',
+                        },
+                        'secondary': {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                            950: '#2e1065',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- استایل‌های سفارشی -->
     <style>
-        @font-face {
-            font-family: 'Vazir';
-            src: url('/fonts/Vazir.eot');
-            src: url('/fonts/Vazir.eot?#iefix') format('embedded-opentype'),
-                 url('/fonts/Vazir.woff2') format('woff2'),
-                 url('/fonts/Vazir.woff') format('woff'),
-                 url('/fonts/Vazir.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        
         body {
-            font-family: 'Vazir', Tahoma, Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f9fafb;
         }
         
-        .highlight {
-            color: #3b82f6;
-        }
-        
-        /* Header Styles */
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px 0;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        nav ul {
-            display: flex;
-            gap: 25px;
-            list-style: none;
-            padding: 0;
-        }
-        
-        nav a {
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(to right, #3b82f6, #8b5cf6);
-            color: white;
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .animated-title {
-            font-size: 3rem;
+        .gradient-text {
+            background-image: linear-gradient(45deg, #0ea5e9, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             font-weight: bold;
-            margin-bottom: 20px;
-            animation: fadeInUp 1s ease;
         }
         
-        .animated-subtitle {
-            font-size: 1.25rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease 0.2s forwards;
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .button {
-            display: inline-block;
-            background: white;
-            color: #3b82f6;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeInUp 1s ease 0.4s forwards;
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
         
-        .button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .pulse-btn {
-            animation: pulse 2s infinite;
-        }
-        
-        .wave-animation {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            z-index: 1;
-        }
-        
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23FFFFFF"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23FFFFFF"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23FFFFFF"/></svg>') no-repeat;
-            background-size: cover;
-            animation: wave 10s linear infinite;
-        }
-        
-        .wave:nth-child(2) {
-            animation-delay: 3s;
-            opacity: 0.7;
-        }
-        
-        .wave:nth-child(3) {
-            animation-delay: 6s;
-            opacity: 0.5;
-        }
-        
-        /* Featured Player */
-        .featured-player {
-            padding: 60px 0;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .featured-player h2 {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 40px;
+        .navbar {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         .player-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            display: flex;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .wave-shape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .wave-shape svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 56px;
+        }
+
+        .wave-shape .shape-fill {
+            fill: #FFFFFF;
         }
         
-        .album-cover {
-            width: 200px;
-            height: 200px;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .bg-music-pattern {
+            background-color: #f0f9ff;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230ea5e9' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
         
-        .album-cover .default-icon {
-            font-size: 5rem;
-        }
-        
-        .player-controls {
-            flex: 1;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .song-info h3 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .song-info p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .controls button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .prev-btn, .next-btn {
-            background: #f0f0f0;
-        }
-        
-        .play-btn {
-            background: #3b82f6;
-            color: white;
-            padding: 10px 30px;
-        }
-        
-        .progress-bar {
-            height: 5px;
-            background: #eee;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            width: 30%;
-            height: 100%;
-            background: #3b82f6;
-        }
-        
-        /* Categories */
-        .categories {
-            padding: 60px 0;
-        }
-        
-        .categories h2 {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 40px;
-        }
-        
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .category-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .card-image {
-            height: 150px;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .default-icon {
-            font-size: 3rem;
-        }
-        
-        .card-content {
-            padding: 20px;
-        }
-        
-        .card-content h3 {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .card-content p {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
-        .card-btn {
-            display: inline-block;
-            background: #3b82f6;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-        
-        .card-btn:hover {
-            background: #2563eb;
-        }
-        
-        /* Trending Section */
-        .trending {
-            padding: 60px 0;
-            background: #f9fafb;
-        }
-        
-        .trending h2 {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 40px;
-        }
-        
-        .trending-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .trending-item {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        
-        .trending-item:hover {
-            transform: translateY(-5px);
-        }
-        
-        .trending-item .default-icon {
-            font-size: 2.5rem;
-            margin-right: 20px;
-        }
-        
-        .trending-item h3 {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .trending-item p {
-            color: #666;
-        }
-        
-        .play-icon {
-            margin-left: auto;
-            font-size: 1.5rem;
-        }
-        
-        /* Stats Section */
-        .stats-section {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transform: translateY(50px);
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #3b82f6;
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
-            font-size: 1.25rem;
-            color: #666;
-        }
-        
-        /* Newsletter */
-        .newsletter {
-            background: linear-gradient(to right, #3b82f6, #8b5cf6);
-            color: white;
-            padding: 100px 20px 60px;
-            text-align: center;
-        }
-        
-        .newsletter h2 {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        
-        .newsletter p {
-            max-width: 600px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        .newsletter-form {
-            display: flex;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .newsletter-form input {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 5px 0 0 5px;
-            font-size: 1rem;
-        }
-        
-        .newsletter-form button {
-            background: #1e40af;
-            color: white;
-            border: none;
-            padding: 0 30px;
-            border-radius: 0 5px 5px 0;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .newsletter-form button:hover {
-            background: #1e3a8a;
-        }
-        
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 60px 0 30px;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-        }
-        
-        footer h3 {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .footer-links {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: #d1d5db;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            margin-top: 30px;
-            border-top: 1px solid #374151;
-            color: #9ca3af;
-        }
-        
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .pulse-animation {
+            animation: pulse 2s infinite;
         }
         
         @keyframes pulse {
             0% {
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-            }
-        }
-        
-        @keyframes wave {
-            0% {
-                transform: translateX(0) translateZ(0) scaleY(1);
+                transform: scale(1);
+                opacity: 1;
             }
             50% {
-                transform: translateX(-25%) translateZ(0) scaleY(0.8);
+                transform: scale(1.05);
+                opacity: 0.8;
             }
             100% {
-                transform: translateX(-50%) translateZ(0) scaleY(1);
-            }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .player-container {
-                flex-direction: column;
-            }
-            
-            .album-cover {
-                width: 100%;
-                height: 200px;
-            }
-            
-            .stats-section {
-                padding: 40px 20px;
-            }
-            
-            .stat-item {
-                width: 50%;
-                margin-bottom: 30px;
-            }
-            
-            .newsletter-form {
-                flex-direction: column;
-            }
-            
-            .newsletter-form input {
-                border-radius: 5px;
-                margin-bottom: 10px;
-            }
-            
-            .newsletter-form button {
-                border-radius: 5px;
-                padding: 15px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .animated-title {
-                font-size: 2rem;
-            }
-            
-            .categories-grid, .trending-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-item {
-                width: 100%;
+                transform: scale(1);
+                opacity: 1;
             }
         }
     </style>
+    
+    @yield('styles')
 </head>
-<body>
-    <header>
-        <div class="container">
-            <div class="flex justify-between items-center">
-                <a href="/" class="text-2xl font-bold">سایت موزیک</a>
-                <nav>
-                    <ul>
-                        <li><a href="/" class="text-blue-600 hover:text-blue-800">صفحه اصلی</a></li>
-                        <li><a href="/artists" class="text-gray-700 hover:text-blue-600">خوانندگان</a></li>
-                        <li><a href="/albums" class="text-gray-700 hover:text-blue-600">آلبوم‌ها</a></li>
-                        <li><a href="/songs" class="text-gray-700 hover:text-blue-600">موزیک‌ها</a></li>
-                        @auth
-                            <li><a href="/admin" class="text-gray-700 hover:text-blue-600">پنل مدیریت</a></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}" class="inline">
-                                    @csrf
-                                    <button type="submit" class="text-red-600 hover:text-red-800">خروج</button>
-                                </form>
-                            </li>
-                        @else
-                            <li><a href="/login" class="text-gray-700 hover:text-blue-600">ورود</a></li>
-                        @endauth
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+<body class="flex flex-col min-h-screen">
+    @include('partials.navbar')
 
-    <main>
+    <main class="flex-grow">
         @yield('content')
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div>
-                <h3>سایت موزیک</h3>
-                <p class="text-gray-400 mb-4">بهترین و جدیدترین موزیک‌ها را آنلاین گوش دهید</p>
-            </div>
-            
-            <div>
-                <h3>دسترسی سریع</h3>
-                <ul class="footer-links">
-                    <li><a href="/">صفحه اصلی</a></li>
-                    <li><a href="/artists">خوانندگان</a></li>
-                    <li><a href="/albums">آلبوم‌ها</a></li>
-                    <li><a href="/songs">موزیک‌ها</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h3>ژانرها</h3>
-                <ul class="footer-links">
-                    <li><a href="#">پاپ</a></li>
-                    <li><a href="#">سنتی</a></li>
-                    <li><a href="#">راک</a></li>
-                    <li><a href="#">بین‌المللی</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h3>تماس با ما</h3>
-                <ul class="footer-links">
-                    <li>آدرس: تهران، خیابان ولیعصر</li>
-                    <li>تلفن: 021-12345678</li>
-                    <li>ایمیل: info@musicsite.com</li>
-                </ul>
+    @include('partials.footer')
+    
+    <!-- پخش کننده موسیقی ثابت -->
+    <div id="music-player" class="player-container fixed bottom-0 left-0 right-0 py-3 px-4 hidden">
+        <div class="container mx-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <img id="player-cover" src="{{ asset('img/default-cover.jpg') }}" alt="Album Cover" class="w-12 h-12 rounded-md object-cover">
+                    <div>
+                        <h4 id="player-title" class="font-medium text-gray-800 text-sm">عنوان آهنگ</h4>
+                        <p id="player-artist" class="text-xs text-gray-500">نام هنرمند</p>
+                    </div>
+                </div>
+                
+                <div class="flex-grow mx-6 hidden md:block">
+                    <div class="flex flex-col">
+                        <div class="flex items-center justify-between">
+                            <span id="current-time" class="text-xs text-gray-500">0:00</span>
+                            <span id="duration" class="text-xs text-gray-500">0:00</span>
+                        </div>
+                        <div class="relative h-1 bg-gray-200 rounded-full mt-1">
+                            <div id="progress-bar" class="absolute top-0 left-0 h-full bg-primary-500 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <button id="prev-button" class="text-gray-600 hover:text-primary-600">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button id="play-pause-button" class="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center hover:bg-primary-600">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button id="next-button" class="text-gray-600 hover:text-primary-600">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <button id="volume-button" class="text-gray-600 hover:text-primary-600 hidden md:block">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
             </div>
         </div>
         
-        <div class="footer-bottom">
-            <p>&copy; {{ date('Y') }} سایت موزیک. تمامی حقوق محفوظ است.</p>
-        </div>
-    </footer>
+        <audio id="audio-player" src=""></audio>
+    </div>
+
+    <!-- اسکریپت‌ها -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // پخش کننده موسیقی
+            const player = document.getElementById('music-player');
+            const audioPlayer = document.getElementById('audio-player');
+            const playPauseButton = document.getElementById('play-pause-button');
+            const prevButton = document.getElementById('prev-button');
+            const nextButton = document.getElementById('next-button');
+            const progressBar = document.getElementById('progress-bar');
+            const currentTimeElement = document.getElementById('current-time');
+            const durationElement = document.getElementById('duration');
+            const playerCover = document.getElementById('player-cover');
+            const playerTitle = document.getElementById('player-title');
+            const playerArtist = document.getElementById('player-artist');
+            
+            // تابع‌های پخش کننده
+            let isPlaying = false;
+            
+            playPauseButton.addEventListener('click', function() {
+                if (isPlaying) {
+                    audioPlayer.pause();
+                } else {
+                    audioPlayer.play();
+                }
+            });
+            
+            audioPlayer.addEventListener('play', function() {
+                isPlaying = true;
+                playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+            });
+            
+            audioPlayer.addEventListener('pause', function() {
+                isPlaying = false;
+                playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+            });
+            
+            audioPlayer.addEventListener('timeupdate', function() {
+                const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBar.style.width = percent + '%';
+                
+                const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+                const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
+                currentTimeElement.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds}`;
+            });
+            
+            audioPlayer.addEventListener('loadedmetadata', function() {
+                const durationMinutes = Math.floor(audioPlayer.duration / 60);
+                const durationSeconds = Math.floor(audioPlayer.duration % 60);
+                durationElement.textContent = `${durationMinutes}:${durationSeconds < 10 ? '0' : ''}${durationSeconds}`;
+            });
+            
+            // گوش دادن به رویداد پخش آهنگ
+            window.addEventListener('play-song', function(event) {
+                const songData = event.detail;
+                
+                playerCover.src = songData.cover;
+                playerTitle.textContent = songData.title;
+                playerArtist.textContent = songData.artist;
+                audioPlayer.src = songData.url;
+                
+                player.classList.remove('hidden');
+                audioPlayer.play();
+            });
+        });
+    </script>
+    
+    @yield('scripts')
 </body>
 </html>

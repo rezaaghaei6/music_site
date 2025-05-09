@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // تنظیم حداکثر اندازه فایل آپلودی
+        $maxUploadSize = env('MAX_UPLOAD_SIZE', 50000); // پیش‌فرض 50MB
+        ini_set('upload_max_filesize', $maxUploadSize . 'K');
+        ini_set('post_max_size', $maxUploadSize . 'K');
     }
 }

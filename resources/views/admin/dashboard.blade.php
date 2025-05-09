@@ -1,196 +1,263 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>داشبورد | پنل مدیریت</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: Tahoma, Arial, sans-serif;
-        }
-    </style>
-</head>
-<body class="bg-gray-100">
-    <div class="flex">
-        <!-- Sidebar -->
-        <div class="w-64 bg-white h-screen shadow-md">
-            <div class="p-4 border-b border-gray-200">
-                <h2 class="text-xl font-bold text-gray-800">پنل مدیریت</h2>
+@extends('layouts.admin')
+
+@section('title', 'داشبورد مدیریت')
+
+@section('content')
+<div class="container mx-auto px-6 py-8">
+    <h3 class="text-gray-700 text-3xl font-medium mb-8">داشبورد</h3>
+
+    <!-- آمار کلی -->
+    <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+        <!-- تعداد موزیک‌ها -->
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs">
+            <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full">
+                <i class="fas fa-music text-xl"></i>
             </div>
-            <nav class="p-4">
-                <ul>
-                    <li class="mb-2">
-                        <a href="{{ route('admin.dashboard') }}" class="block p-2 rounded text-blue-600 bg-blue-100">داشبورد</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="{{ route('admin.artists.index') }}" class="block p-2 rounded text-gray-700 hover:bg-gray-100">خوانندگان</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="{{ route('admin.albums.index') }}" class="block p-2 rounded text-gray-700 hover:bg-gray-100">آلبوم‌ها</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="{{ route('admin.songs.index') }}" class="block p-2 rounded text-gray-700 hover:bg-gray-100">موزیک‌ها</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="{{ route('admin.genres.index') }}" class="block p-2 rounded text-gray-700 hover:bg-gray-100">ژانرها</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="{{ route('admin.playlists.index') }}" class="block p-2 rounded text-gray-700 hover:bg-gray-100">لیست‌های پخش</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="{{ route('admin.users') }}" class="block p-2 rounded text-gray-700 hover:bg-gray-100">کاربران</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="{{ route('admin.settings') }}" class="block p-2 rounded text-gray-700 hover:bg-gray-100">تنظیمات</a>
-                    </li>
-                    <li class="mt-6">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="w-full text-left p-2 rounded text-red-600 hover:bg-red-100">خروج</button>
-                        </form>
-                    </li>
-                </ul>
-            </nav>
+            <div>
+                <p class="mb-2 text-sm font-medium text-gray-600">
+                    موزیک‌ها
+                </p>
+                <p class="text-lg font-semibold text-gray-700">
+                    {{ number_format($totalSongs) }}
+                </p>
+            </div>
         </div>
-        
-        <!-- Main Content -->
-        <div class="flex-1 p-8">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-3xl font-bold text-gray-900">داشبورد</h1>
-                <div class="text-gray-600">
-                    خوش آمدید، {{ Auth::user()->name }}
-                </div>
+
+        <!-- تعداد هنرمندان -->
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs">
+            <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full">
+                <i class="fas fa-microphone text-xl"></i>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </div>
-                        <div class="mr-4">
-                            <h3 class="text-lg font-semibold mb-1 text-gray-700">خوانندگان</h3>
-                            <p class="text-3xl font-bold text-blue-600">{{ \App\Models\Artist::count() }}</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-green-100 text-green-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                        </div>
-                        <div class="mr-4">
-                            <h3 class="text-lg font-semibold mb-1 text-gray-700">آلبوم‌ها</h3>
-                            <p class="text-3xl font-bold text-green-600">{{ \App\Models\Album::count() }}</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                            </svg>
-                        </div>
-                        <div class="mr-4">
-                            <h3 class="text-lg font-semibold mb-1 text-gray-700">موزیک‌ها</h3>
-                            <p class="text-3xl font-bold text-yellow-600">{{ \App\Models\Song::count() }}</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                        </div>
-                        <div class="mr-4">
-                            <h3 class="text-lg font-semibold mb-1 text-gray-700">کاربران</h3>
-                            <p class="text-3xl font-bold text-purple-600">{{ \App\Models\User::count() }}</p>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <p class="mb-2 text-sm font-medium text-gray-600">
+                    هنرمندان
+                </p>
+                <p class="text-lg font-semibold text-gray-700">
+                    {{ number_format($totalArtists) }}
+                </p>
             </div>
-            
-            <!-- Latest Songs -->
-            <div class="mb-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold text-gray-800">آخرین موزیک‌ها</h2>
-                    <a href="{{ route('admin.songs.index') }}" class="text-blue-600 hover:text-blue-800">مشاهده همه</a>
-                </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <table class="min-w-full bg-white">
+        </div>
+
+        <!-- تعداد آلبوم‌ها -->
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs">
+            <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full">
+                <i class="fas fa-compact-disc text-xl"></i>
+            </div>
+            <div>
+                <p class="mb-2 text-sm font-medium text-gray-600">
+                    آلبوم‌ها
+                </p>
+                <p class="text-lg font-semibold text-gray-700">
+                    {{ number_format($totalAlbums) }}
+                </p>
+            </div>
+        </div>
+
+        <!-- تعداد پخش -->
+        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs">
+            <div class="p-3 mr-4 text-purple-500 bg-purple-100 rounded-full">
+                <i class="fas fa-play text-xl"></i>
+            </div>
+            <div>
+                <p class="mb-2 text-sm font-medium text-gray-600">
+                    پخش‌ها
+                </p>
+                <p class="text-lg font-semibold text-gray-700">
+                    {{ number_format($totalPlays) }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- بخش اصلی -->
+    <div class="grid gap-6 mb-8 md:grid-cols-2">
+        <!-- آخرین موزیک‌ها -->
+        <div class="bg-white rounded-lg shadow-xs">
+            <div class="p-4 border-b">
+                <h2 class="text-lg font-semibold text-gray-700">آخرین موزیک‌ها</h2>
+            </div>
+            <div class="p-4">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
                         <thead>
-                            <tr class="bg-gray-100">
-                                <th class="py-3 px-4 text-right">عنوان</th>
-                                <th class="py-3 px-4 text-right">خواننده</th>
-                                <th class="py-3 px-4 text-right">آلبوم</th>
-                                <th class="py-3 px-4 text-right">تعداد پخش</th>
-                                <th class="py-3 px-4 text-right">تاریخ انتشار</th>
+                            <tr class="text-xs font-semibold tracking-wide text-right text-gray-500 uppercase border-b">
+                                <th class="px-4 py-3">عنوان</th>
+                                <th class="px-4 py-3">هنرمند</th>
+                                <th class="px-4 py-3">تاریخ</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @forelse (\App\Models\Song::with(['artist', 'album'])->orderBy('created_at', 'desc')->limit(5)->get() as $song)
-                                <tr class="border-t">
-                                    <td class="py-3 px-4">{{ $song->title }}</td>
-                                    <td class="py-3 px-4">{{ $song->artist->name }}</td>
-                                    <td class="py-3 px-4">{{ $song->album ? $song->album->title : '-' }}</td>
-                                    <td class="py-3 px-4">{{ $song->plays }}</td>
-                                    <td class="py-3 px-4">{{ $song->created_at->format('Y/m/d') }}</td>
+                        <tbody class="bg-white divide-y">
+                            @forelse($latestSongs as $song)
+                                <tr class="text-gray-700">
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center text-sm">
+                                            <!-- تصویر موزیک -->
+                                            <div class="relative hidden w-8 h-8 ml-3 rounded-full md:block">
+                                                @if($song->cover_image)
+                                                    <img class="object-cover w-full h-full rounded-full" src="{{ asset('storage/' . $song->cover_image) }}" alt="{{ $song->title }}" loading="lazy" />
+                                                @else
+                                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                                        <i class="fas fa-music text-gray-400"></i>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold">{{ $song->title }}</p>
+                                                @if($song->album)
+                                                    <p class="text-xs text-gray-600">{{ $song->album->title }}</p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        {{ $song->artist->name ?? 'نامشخص' }}
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        {{ $song->created_at->format('Y/m/d') }}
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="py-6 text-center text-gray-500">هیچ موزیکی یافت نشد.</td>
+                                    <td colspan="3" class="px-4 py-3 text-sm text-center text-gray-500">
+                                        موزیکی یافت نشد.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4">
+                    <a href="{{ route('admin.songs.index') }}" class="text-sm text-blue-600 hover:underline">
+                        مشاهده همه موزیک‌ها
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- پربازدیدترین موزیک‌ها -->
+        <div class="bg-white rounded-lg shadow-xs">
+            <div class="p-4 border-b">
+                <h2 class="text-lg font-semibold text-gray-700">پربازدیدترین موزیک‌ها</h2>
+            </div>
+            <div class="p-4">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="text-xs font-semibold tracking-wide text-right text-gray-500 uppercase border-b">
+                                <th class="px-4 py-3">عنوان</th>
+                                <th class="px-4 py-3">هنرمند</th>
+                                <th class="px-4 py-3">تعداد پخش</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y">
+                            @forelse($popularSongs as $song)
+                                <tr class="text-gray-700">
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center text-sm">
+                                            <!-- تصویر موزیک -->
+                                            <div class="relative hidden w-8 h-8 ml-3 rounded-full md:block">
+                                                @if($song->cover_image)
+                                                    <img class="object-cover w-full h-full rounded-full" src="{{ asset('storage/' . $song->cover_image) }}" alt="{{ $song->title }}" loading="lazy" />
+                                                @else
+                                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                                        <i class="fas fa-music text-gray-400"></i>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold">{{ $song->title }}</p>
+                                                @if($song->album)
+                                                    <p class="text-xs text-gray-600">{{ $song->album->title }}</p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        {{ $song->artist->name ?? 'نامشخص' }}
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        {{ number_format($song->plays) }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="px-4 py-3 text-sm text-center text-gray-500">
+                                        موزیکی یافت نشد.
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
-            
-            <!-- Latest Artists -->
-            <div>
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold text-gray-800">آخرین خوانندگان</h2>
-                    <a href="{{ route('admin.artists.index') }}" class="text-blue-600 hover:text-blue-800">مشاهده همه</a>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    @forelse (\App\Models\Artist::orderBy('created_at', 'desc')->limit(4)->get() as $artist)
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                            <div class="h-40 bg-gray-300 relative">
-                                @if ($artist->image)
-                                    <img src="{{ asset('storage/' . $artist->image) }}" alt="{{ $artist->name }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="flex items-center justify-center h-full">
-                                        <span class="text-4xl text-gray-500">{{ substr($artist->name, 0, 1) }}</span>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-semibold mb-2">{{ $artist->name }}</h3>
-                                <div class="flex justify-between text-sm text-gray-600">
-                                    <span>{{ $artist->songs->count() }} موزیک</span>
-                                    <span>{{ $artist->albums->count() }} آلبوم</span>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-span-4 bg-white rounded-lg shadow-md p-6 text-center text-gray-500">
-                            هیچ خواننده‌ای یافت نشد.
-                        </div>
-                    @endforelse
-                </div>
+        </div>
+    </div>
+
+    <!-- نمودار و آمار به تفکیک ژانر -->
+    <div class="bg-white rounded-lg shadow-xs p-4">
+        <div class="border-b pb-4">
+            <h2 class="text-lg font-semibold text-gray-700">آمار موزیک‌ها به تفکیک ژانر</h2>
+        </div>
+        <div class="mt-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                @foreach($songsByGenre as $genre)
+                    <div class="bg-gray-50 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-gray-700 mb-2">{{ $genre->songs_count }}</div>
+                        <div class="text-sm text-gray-600">{{ $genre->name }}</div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
-</body>
-</html>
+
+    <!-- لینک‌های سریع -->
+    <div class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <a href="{{ route('admin.songs.create') }}" class="transform hover:scale-105 transition-transform duration-200 bg-white rounded-lg shadow-xs p-4 flex items-center">
+            <div class="p-3 ml-4 text-blue-500 bg-blue-100 rounded-full">
+                <i class="fas fa-plus text-xl"></i>
+            </div>
+            <div>
+                <p class="text-lg font-semibold text-gray-700">افزودن موزیک جدید</p>
+                <p class="text-sm text-gray-600">آپلود و ثبت موزیک جدید</p>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.artists.create') }}" class="transform hover:scale-105 transition-transform duration-200 bg-white rounded-lg shadow-xs p-4 flex items-center">
+            <div class="p-3 ml-4 text-green-500 bg-green-100 rounded-full">
+                <i class="fas fa-user-plus text-xl"></i>
+            </div>
+            <div>
+                <p class="text-lg font-semibold text-gray-700">افزودن هنرمند</p>
+                <p class="text-sm text-gray-600">ثبت هنرمند جدید</p>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.albums.create') }}" class="transform hover:scale-105 transition-transform duration-200 bg-white rounded-lg shadow-xs p-4 flex items-center">
+            <div class="p-3 ml-4 text-purple-500 bg-purple-100 rounded-full">
+                <i class="fas fa-compact-disc text-xl"></i>
+            </div>
+            <div>
+                <p class="text-lg font-semibold text-gray-700">افزودن آلبوم</p>
+                <p class="text-sm text-gray-600">ثبت آلبوم جدید</p>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.users.index') }}" class="transform hover:scale-105 transition-transform duration-200 bg-white rounded-lg shadow-xs p-4 flex items-center">
+            <div class="p-3 ml-4 text-yellow-500 bg-yellow-100 rounded-full">
+                <i class="fas fa-users text-xl"></i>
+            </div>
+            <div>
+                <p class="text-lg font-semibold text-gray-700">مدیریت کاربران</p>
+                <p class="text-sm text-gray-600">مشاهده و مدیریت کاربران</p>
+            </div>
+        </a>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // اگر نیاز به نمودار دارید، می‌توانید اینجا اضافه کنید
+</script>
+@endsection

@@ -1,26 +1,27 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحه یافت نشد | خطای 404</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: Tahoma, Arial, sans-serif;
-        }
-    </style>
-</head>
-<body class="bg-gray-100">
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="text-center">
-            <h1 class="text-9xl font-bold text-gray-300">404</h1>
-            <h2 class="text-2xl font-bold mb-6 text-gray-700">صفحه مورد نظر یافت نشد</h2>
-            <p class="text-gray-600 mb-8">صفحه‌ای که به دنبال آن هستید وجود ندارد یا حذف شده است.</p>
-            <a href="{{ url('/') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+@extends('layouts.app')
+
+@section('title', 'صفحه مورد نظر یافت نشد')
+
+@section('content')
+<div class="flex items-center justify-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full text-center">
+        <div class="text-9xl font-bold text-primary-300 mb-4">404</div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">صفحه مورد نظر یافت نشد</h1>
+        <p class="text-gray-600 mb-8">متأسفانه صفحه‌ای که به دنبال آن هستید وجود ندارد یا به آدرس دیگری منتقل شده است.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{{ route('home') }}" class="bg-primary-600 text-white px-6 py-3 rounded-md hover:bg-primary-700 transition-colors">
                 بازگشت به صفحه اصلی
             </a>
+            <button onclick="window.history.back()" class="bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-md hover:bg-gray-50 transition-colors">
+                بازگشت به صفحه قبل
+            </button>
+        </div>
+        
+        <div class="mt-12">
+            <p class="text-gray-500 text-sm">
+                اگر فکر می‌کنید این یک اشتباه است، لطفاً با پشتیبانی تماس بگیرید.
+            </p>
         </div>
     </div>
-</body>
-</html>
+</div>
+@endsection

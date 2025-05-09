@@ -10,19 +10,12 @@ class Genre extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'slug',
+        'description',
     ];
 
-    /**
-     * Get the songs for the genre.
-     */
     public function songs(): HasMany
     {
         return $this->hasMany(Song::class);
